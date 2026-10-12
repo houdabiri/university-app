@@ -1,0 +1,58 @@
+body {
+  background-color: #f0f2f5;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.student-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+}
+
+.student-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #e0e0e0;
+}
+
+.student-card h2 {
+  color: #4a90e2;
+  margin-bottom: 20px;
+}
+
+.student-card p {
+  font-size: 14px;
+  color: #333;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.contact-btn {
+  background-color: #5bc0de;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.contact-btn:hover {
+  background-color: #31b0d5;
+}
