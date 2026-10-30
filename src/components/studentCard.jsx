@@ -1,7 +1,12 @@
-
+import './studentCard.css'
+import {useState} from "react"
   
   function StudentCard(props) {
   const ville = props.ville || "Non renseignée";
+  const [coordonneesVisibles,setcoordonneesVisibles]=useState(false);
+  function basculerCoordonnees(){
+    setcoordonneesVisibles(!coordonneesVisibles);
+  };
   return (
 
     <div className="card-container">
@@ -10,8 +15,12 @@
 
         <h2>Fiche étudiant</h2>
         <p>Nom & Prénom : {props.nomPrenom} </p>
-        <p>Email : {props.email}</p>
-        <p>Téléphone : {props.telephone}</p>
+        {coordonneesVisibles &&(
+          <>
+          <p>Email : {props.email}</p>
+          <p>Téléphone : {props.telephone}</p>
+          </>
+        )}
         <p>Filière : {props.filiere}</p>
         <p>Année d'étude :{props.anneedetude}</p>
         <p>Groupe : {props.groupe}</p>
@@ -20,6 +29,14 @@
         <a href={'mailto:${props.email}'}>
           <button className="contact-btn">contacter</button>
         </a>
+        <button className='basculer-btn' onClick={basculerCoordonnees}>
+          {coordonneesVisibles
+            ? "Masquer les coordonnées"
+            : "Afficher les coordonnées"}
+        </button>
+        
+        <button className='supprimer-btn' onClick={props.supprimerEtudiant}>supprimer</button>
+        <button className='modifier-btn' onClick={props.modifierEtudiant}>modifier</button>
       </div>
     </div>
   )

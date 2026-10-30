@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -8,12 +7,15 @@ import photo from "./photo.jpg"
 import photo2 from "./photo2.jpg"
 import photo3 from "./photo3.jpg"
 import photo4 from "./photo4.jpg"
+import photo5 from "./photo5.png"
 import Header from './components/header'
 import Navbar from './components/navbar'
 import Footer from './components/footer'
+import { useState } from 'react'
 
 
-const etudiant = [
+  function App() {
+   const [ etudiant,setEtudiants] = useState([
   {
   nomPrenom: "Nour Houda Biri",
   email: "houdabiri4@gmail.com",
@@ -53,12 +55,27 @@ const etudiant = [
     groupe: "GLSI 2",
     image: photo4,
   },
-];
-  function App() {
+]);
+
+  function ajouterEtudiant(){
+    const nouvelEtudiant = {
+      nomPrenom: "Rayen Ben Salem",
+      email: "RayenBenSalem@gmail.com",
+      telephone: "+216 44 444 444",
+      filiere: "Génie Logiciel et Systèmes d'Information",
+      anneedetude :"2026/2027",
+      groupe: "GLSI 2",
+      ville: "Sfax",
+      image: photo5,
+    };
+    setEtudiants([...etudiant, nouvelEtudiant]);
+  }; 
+  
   return (
     <div>
       <Header />
       <Navbar />
+      <button className ="ajouter-btn" onClick={ajouterEtudiant}>Ajouter un étudiant</button>
      <div className="card-container">
       {etudiant.map((etudiant)=>(
       <StudentCard
