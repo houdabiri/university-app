@@ -26,7 +26,7 @@ import {useState} from "react"
         <p>Groupe : {props.groupe}</p>
         <p>Ville : {ville}</p>
 
-        <a href={'mailto:${props.email}'}>
+        <a href={'mailto:${props.email}'} >
           <button className="contact-btn">contacter</button>
         </a>
         <button className='basculer-btn' onClick={basculerCoordonnees}>
@@ -35,8 +35,8 @@ import {useState} from "react"
             : "Afficher les coordonnées"}
         </button>
         
-        <button className='supprimer-btn' onClick={props.supprimerEtudiant}>supprimer</button>
-        <button className='modifier-btn' onClick={props.modifierEtudiant}>modifier</button>
+        <button className='supprimer-btn' onClick={()=> props.onSupprimer(props.email)}>supprimer</button>
+        <button className='modifier-btn' onClick={()=> props.onModifier(props.email)}>modifier</button>
       </div>
     </div>
   )

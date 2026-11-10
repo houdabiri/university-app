@@ -12,7 +12,7 @@ import Header from './components/header'
 import Navbar from './components/navbar'
 import Footer from './components/footer'
 import { useState } from 'react'
-
+import StudentForm from './components/studentForm';
 
   function App() {
    const [ etudiant,setEtudiants] = useState([
@@ -70,14 +70,57 @@ import { useState } from 'react'
     };
     setEtudiants([...etudiant, nouvelEtudiant]);
   }; 
+
+  function supprimerEtudiant(email){
+    setEtudiants(
+      (
+        anciensEtudiants,
+      )=> anciensEtudiants.filter((etudiant)=> etudiant.email!==email),
+    );
+     
+  };
+
+  function modifierEtudiant(email){
+    const nouveaunomPrenom = prompt("saisir le nouveau nom et prénom : ");
+    if (
+      nouveaunomPrenom !== null &&
+      nouveaunomPrenom.trim() !== ""
+    ){
+      setEtudiants((anciensEtudiants)=>
+      anciensEtudiants.map(
+        (etudiant) =>
+         etudiant.email === email
+          ?{
+            ...etudiant,
+            nomPrenom : nouveaunomPrenom.trim(),
+          }
+          : etudiant,
+      ),
+    );
+    }
+
+  };
+
+  const [recherche, setRecherche] = useState("");
+  const etudiantsFiltres = etudiant.filter(
+    (etudiant) => etudiant.filiere.toLowerCase().includes(recherche.toLowerCase()),
+  )
+  
   
   return (
-    <div>
+    <>
       <Header />
       <Navbar />
-      <button className ="ajouter-btn" onClick={ajouterEtudiant}>Ajouter un étudiant</button>
+      <StudentForm />
+      <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter </button>
+      <input 
+          type="text"
+          className='search-input'
+          placeholder='Rechercher par filière...'
+          value={recherche}
+          onChange={(e) => setRecherche(e.target.value)}></input>
      <div className="card-container">
-      {etudiant.map((etudiant)=>(
+      {etudiantsFiltres.map((etudiant)=>(
       <StudentCard
         key={etudiant.email}
         nomPrenom={etudiant.nomPrenom}
@@ -88,11 +131,13 @@ import { useState } from 'react'
         groupe={etudiant.groupe}
         ville={etudiant.ville}
         image={etudiant.image}
+        onSupprimer={supprimerEtudiant}
+        onModifier={modifierEtudiant}
       />
       ))}
      </div>
      <Footer />
-    </div>
+    </>
   );
 }
 

@@ -1,0 +1,17 @@
+.student-Form-container {
+display: flex;
+background-color: rgb(226, 224, 222);
+flex-direction: column;
+margin-top: 50px;
+margin-bottom: 10px;
+width: 50%;
+align-self: center;
+padding: 40px 20px;
+}
+
+h2{
+    color: #e67e22;
+}
+
+
+
