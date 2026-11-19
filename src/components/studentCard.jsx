@@ -35,8 +35,8 @@ import {useState} from "react"
             : "Afficher les coordonnées"}
         </button>
         
-        <button className='supprimer-btn' onClick={()=> props.onSupprimer(props.email)}>supprimer</button>
-        <button className='modifier-btn' onClick={()=> props.onModifier(props.email)}>modifier</button>
+        <button className='supprimer-btn' onClick={()=> props.onSupprimer(props.id)}>supprimer</button>
+        <button className='modifier-btn' onClick={()=> props.onModifier(props.id)}>modifier</button>
       </div>
     </div>
   )

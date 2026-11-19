@@ -1,16 +1,40 @@
 import { useState } from "react";
 import'./studentForm.css';
-function StudentForm(){
+function StudentForm({onAjouterEtudiant}){
+    const [nomPrenom,setnomPrenom]=useState("");
+    const [email,setemail]=useState("");
+    const [telephone,settelephone]=useState("");
+    const [filiere,setfiliere]=useState("");
+    const [anneedetude,setanneedetude]=useState("");
+    const [groupe,setgroupe]=useState("");
+    const [ville,setville]=useState("");
+    const [image,setimage]=useState("");
+    function handleSubmit(e){
+        e.preventDefault();
+        const nouvelEtudiant={
+            nomPrenom : nomPrenom,
+            email:email,
+            telephone:telephone,
+            filiere:filiere,
+            anneedetude:anneedetude,
+            groupe:groupe,
+            ville:ville,
+            image:image,
+        };
+        console.log("Nouvel étudiant ajouté :", nouvelEtudiant);
+        onAjouterEtudiant(nouvelEtudiant);
+    }
     return (
-        <div className="student-Form-container">
+        <form onSubmit={handleSubmit} className="student-Form-container">
             <h2>Ajouter un Etudiant</h2>
             
             <label>Nom & Prénom : </label>
             <input 
                 type="text"
-                id="nom"
-                name="nom"
+                id="nomPrenom"
+                name="nomPrenom"
                 placeholder="saisir votre nom et prénom "
+                onChange={(e)=>setnomPrenom(e.target.value)}
                 required>
             </input>
 
@@ -20,6 +44,7 @@ function StudentForm(){
                 id="email"
                 name="email"
                 placeholder="saisir votre email"
+                onChange={(e)=>setemail(e.target.value)}
                 required>
                </input>
 
@@ -29,11 +54,12 @@ function StudentForm(){
                 id="telephone"
                 name="telephone"
                 placeholder="saisir votre téléphone"
+                onChange={(e)=>settelephone(e.target.value)}
                 required
                ></input>
 
             <label htmlFor="filière"> Filière : </label>
-            <select id="filiere" name="filiere" required>
+            <select id="filiere" name="filiere"  onChange={(e)=>setfiliere(e.target.value)} required>
                 <option value=""> Choisir une filière </option>
                 <option value="GLSI">GLSI</option>
                 <option value="DSI">DSI</option>
@@ -46,6 +72,7 @@ function StudentForm(){
                 id="anneedetude"
                 name="anneedetude"
                 placeholder="saisir votre année d'etude"
+                onChange={(e)=>setanneedetude(e.target.value)}
                 required
                ></input>
 
@@ -55,6 +82,7 @@ function StudentForm(){
                 id="groupe"
                 name="groupe"
                 placeholder="saisir votre groupe"
+                onChange={(e)=>setgroupe(e.target.value)}
                 required
                ></input>
 
@@ -64,14 +92,25 @@ function StudentForm(){
                 id="ville"
                 name="ville"
                 placeholder="saisir votre ville"
+                onChange={(e)=>setville(e.target.value)}
                 required
                ></input>
 
             <label htmlFor="image"> Image : </label>
-            <input type="file" id="image" accept="image/*"></input>
+            <input
+                   type="file"
+                   id="image" 
+                   accept="image/*"
+                   onChange={(e)=>{
+                       const fichier=e.target.files[0];
+                       if (fichier){
+                           setimage(url.createObjectURL(fichier));
+                       }
+                   }}
+                   ></input>
 
-
-        </div>
+            <button type="submit" className="btn-submit">Ajouter</button>
+        </form>
     )
 };
 export default StudentForm;

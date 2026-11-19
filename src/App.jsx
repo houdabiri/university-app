@@ -17,6 +17,7 @@ import StudentForm from './components/studentForm';
   function App() {
    const [ etudiant,setEtudiants] = useState([
   {
+  id:1,
   nomPrenom: "Nour Houda Biri",
   email: "houdabiri4@gmail.com",
   telephone: "+216 25 014 889",
@@ -27,6 +28,7 @@ import StudentForm from './components/studentForm';
   image: photo,
   },
   {
+    id:2,
     nomPrenom: "Sarra Trabelsi",
     email: "sarraTrabelsi@gmail.com",
     telephone: "+216 22 345 678",
@@ -37,6 +39,7 @@ import StudentForm from './components/studentForm';
     image: photo2,
   },
   {
+    id:3,
     nomPrenom: "Slim Boubaker",
     email: "slimBoubaker@gmail.com",
     telephone: "+216 26 564 789",
@@ -47,6 +50,7 @@ import StudentForm from './components/studentForm';
     image: photo3,
    },
    {
+    id:4,
     nomPrenom: "Kader Ben Ali",
     email: "KaderBenAli@gmail.com",
     telephone: "+216 21 989 513",
@@ -59,6 +63,7 @@ import StudentForm from './components/studentForm';
 
   function ajouterEtudiant(){
     const nouvelEtudiant = {
+      id:5,
       nomPrenom: "Rayen Ben Salem",
       email: "RayenBenSalem@gmail.com",
       telephone: "+216 44 444 444",
@@ -71,16 +76,16 @@ import StudentForm from './components/studentForm';
     setEtudiants([...etudiant, nouvelEtudiant]);
   }; 
 
-  function supprimerEtudiant(email){
+  function supprimerEtudiant(id){
     setEtudiants(
       (
         anciensEtudiants,
-      )=> anciensEtudiants.filter((etudiant)=> etudiant.email!==email),
+      )=> anciensEtudiants.filter((etudiant)=> etudiant.id!==id),
     );
      
   };
 
-  function modifierEtudiant(email){
+  function modifierEtudiant(id){
     const nouveaunomPrenom = prompt("saisir le nouveau nom et prénom : ");
     if (
       nouveaunomPrenom !== null &&
@@ -89,7 +94,7 @@ import StudentForm from './components/studentForm';
       setEtudiants((anciensEtudiants)=>
       anciensEtudiants.map(
         (etudiant) =>
-         etudiant.email === email
+         etudiant.id === id
           ?{
             ...etudiant,
             nomPrenom : nouveaunomPrenom.trim(),
@@ -105,14 +110,22 @@ import StudentForm from './components/studentForm';
   const etudiantsFiltres = etudiant.filter(
     (etudiant) => etudiant.filiere.toLowerCase().includes(recherche.toLowerCase()),
   )
+
+  function ajouterEtudiant(nouvelEtudiant){
+    const etudiantAvecId ={
+      ...nouvelEtudiant,
+      id: Date.now(),
+    };
+    setEtudiants((anciensEtudiants)=>[...anciensEtudiants,etudiantAvecId]);
+  }
   
   
   return (
     <>
       <Header />
       <Navbar />
-      <StudentForm />
-      <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter </button>
+      <StudentForm onAjouterEtudiant={ajouterEtudiant}/>
+     {/* <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter étudiant </button>*/}
       <input 
           type="text"
           className='search-input'
@@ -122,7 +135,8 @@ import StudentForm from './components/studentForm';
      <div className="card-container">
       {etudiantsFiltres.map((etudiant)=>(
       <StudentCard
-        key={etudiant.email}
+        key={etudiant.id}
+        id={etudiant.id}
         nomPrenom={etudiant.nomPrenom}
         email={etudiant.email}
         telephone={etudiant.telephone}
