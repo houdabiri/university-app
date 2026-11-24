@@ -85,7 +85,7 @@ import StudentForm from './components/studentForm';
      
   };
 
-  function modifierEtudiant(id){
+ {/* function modifierEtudiant(id){
     const nouveaunomPrenom = prompt("saisir le nouveau nom et prénom : ");
     if (
       nouveaunomPrenom !== null &&
@@ -104,7 +104,8 @@ import StudentForm from './components/studentForm';
     );
     }
 
-  };
+  };*/}
+
 
   const [recherche, setRecherche] = useState("");
   const etudiantsFiltres = etudiant.filter(
@@ -117,14 +118,34 @@ import StudentForm from './components/studentForm';
       id: Date.now(),
     };
     setEtudiants((anciensEtudiants)=>[...anciensEtudiants,etudiantAvecId]);
-  }
-  
-  
+  };
+
+  const [etudiantModifier , setEtudiantModifier]=useState(null);
+   function ModifierEtudiant(etudiant){
+     setEtudiantModifier(etudiant);
+   };
+
+   function enregistrerModification(etudiantModifier){
+     setEtudiants((anciensEtudiants)=>
+      anciensEtudiants.map((etudiant)=> 
+         etudiant.id === etudiantModifier.id
+          ? { ...etudiantModifier,id: etudiant.id}
+          : etudiant,
+        ),
+      );
+      setEtudiantModifier(null);
+   };
+
   return (
     <>
       <Header />
       <Navbar />
-      <StudentForm onAjouterEtudiant={ajouterEtudiant}/>
+      <StudentForm 
+         key={etudiantModifier ? etudiantModifier.id : "nouveau"}
+         onAjouterEtudiant={ajouterEtudiant}
+         etudiantModifier={etudiantModifier}
+         onModifierEtudiant={enregistrerModification}
+         />
      {/* <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter étudiant </button>*/}
       <input 
           type="text"
@@ -137,6 +158,7 @@ import StudentForm from './components/studentForm';
       <StudentCard
         key={etudiant.id}
         id={etudiant.id}
+        etudiant={etudiant}
         nomPrenom={etudiant.nomPrenom}
         email={etudiant.email}
         telephone={etudiant.telephone}
@@ -146,7 +168,7 @@ import StudentForm from './components/studentForm';
         ville={etudiant.ville}
         image={etudiant.image}
         onSupprimer={supprimerEtudiant}
-        onModifier={modifierEtudiant}
+        onModifier={ModifierEtudiant}
       />
       ))}
      </div>

@@ -1,18 +1,23 @@
 import { useState } from "react";
 import'./studentForm.css';
-function StudentForm({onAjouterEtudiant}){
-    const [nomPrenom,setnomPrenom]=useState("");
-    const [email,setemail]=useState("");
-    const [telephone,settelephone]=useState("");
-    const [filiere,setfiliere]=useState("");
-    const [anneedetude,setanneedetude]=useState("");
-    const [groupe,setgroupe]=useState("");
-    const [ville,setville]=useState("");
-    const [image,setimage]=useState("");
+function StudentForm({
+    onAjouterEtudiant,
+    etudiantModifier,
+    onModifierEtudiant
+}){
+    const [nomPrenom,setnomPrenom]=useState(etudiantModifier?.nomPrenom || "");
+    const [email,setemail]=useState(etudiantModifier?.email|| "");
+    const [telephone,settelephone]=useState(etudiantModifier?.telephone || "");
+    const [filiere,setfiliere]=useState(etudiantModifier?.filiere || "");
+    const [anneedetude,setanneedetude]=useState(etudiantModifier?.anneedetude || "");
+    const [groupe,setgroupe]=useState(etudiantModifier?.groupe || "");
+    const [ville,setville]=useState(etudiantModifier?.ville || "");
+    const [image,setimage]=useState(etudiantModifier?.image || "");
     function handleSubmit(e){
         e.preventDefault();
+
         const nouvelEtudiant={
-            nomPrenom : nomPrenom,
+            nomPrenom :nomPrenom,
             email:email,
             telephone:telephone,
             filiere:filiere,
@@ -21,27 +26,52 @@ function StudentForm({onAjouterEtudiant}){
             ville:ville,
             image:image,
         };
-        console.log("Nouvel étudiant ajouté :", nouvelEtudiant);
-        onAjouterEtudiant(nouvelEtudiant);
+        if (!validerFormulaire()){
+            return;
+        }
+        if (etudiantModifier){
+            onModifierEtudiant({
+                ...etudiantModifier,
+                ...nouvelEtudiant,
+            });
+        }else{
+            onAjouterEtudiant(nouvelEtudiant);
+        }
+       {/* console.log("Nouvel étudiant ajouté :", nouvelEtudiant);
+           onAjouterEtudiant(nouvelEtudiant);*/}
+    }
+
+    const[erreurs, setErreurs]=useState({});
+
+    function validerFormulaire(){
+        const nouvellesErreurs = {};
+        if (!nomPrenom.trim()){
+            nouvellesErreurs.nomPrenom = "Nom & prénom obligatoire";
+        }
+        setErreurs(nouvellesErreurs);
+        return object.keys(nouvellesErreurs).length ===0;
     }
     return (
         <form onSubmit={handleSubmit} className="student-Form-container">
-            <h2>Ajouter un Etudiant</h2>
+            <h2>{etudiantModifier ? "Modifier l'étudiant" : "Ajouter un étudiant"}</h2>
             
             <label>Nom & Prénom : </label>
             <input 
                 type="text"
                 id="nomPrenom"
                 name="nomPrenom"
+                value={nomPrenom}
                 placeholder="saisir votre nom et prénom "
                 onChange={(e)=>setnomPrenom(e.target.value)}
                 required>
             </input>
+            {erreurs.nomPrenom && <p className="error-msg">{erreurs.nomPrenom}</p>}
 
             <label> Email : </label>
             <input 
                 type="email"
                 id="email"
+                value={email}
                 name="email"
                 placeholder="saisir votre email"
                 onChange={(e)=>setemail(e.target.value)}
@@ -52,6 +82,7 @@ function StudentForm({onAjouterEtudiant}){
             <input 
                 type="tel"
                 id="telephone"
+                value={telephone}
                 name="telephone"
                 placeholder="saisir votre téléphone"
                 onChange={(e)=>settelephone(e.target.value)}
@@ -59,7 +90,7 @@ function StudentForm({onAjouterEtudiant}){
                ></input>
 
             <label htmlFor="filière"> Filière : </label>
-            <select id="filiere" name="filiere"  onChange={(e)=>setfiliere(e.target.value)} required>
+            <select id="filiere" name="filiere" value={filiere} onChange={(e)=>setfiliere(e.target.value)} required>
                 <option value=""> Choisir une filière </option>
                 <option value="GLSI">GLSI</option>
                 <option value="DSI">DSI</option>
@@ -71,6 +102,7 @@ function StudentForm({onAjouterEtudiant}){
                 type="text"
                 id="anneedetude"
                 name="anneedetude"
+                value={anneedetude}
                 placeholder="saisir votre année d'etude"
                 onChange={(e)=>setanneedetude(e.target.value)}
                 required
@@ -81,6 +113,7 @@ function StudentForm({onAjouterEtudiant}){
                 type="text"
                 id="groupe"
                 name="groupe"
+                value={groupe}
                 placeholder="saisir votre groupe"
                 onChange={(e)=>setgroupe(e.target.value)}
                 required
@@ -91,6 +124,7 @@ function StudentForm({onAjouterEtudiant}){
                 type="text"
                 id="ville"
                 name="ville"
+                value={ville}
                 placeholder="saisir votre ville"
                 onChange={(e)=>setville(e.target.value)}
                 required
@@ -109,7 +143,7 @@ function StudentForm({onAjouterEtudiant}){
                    }}
                    ></input>
 
-            <button type="submit" className="btn-submit">Ajouter</button>
+            <button type="submit" className="btn-submit">{etudiantModifier ? "Modifier" : "Ajouter"}</button>
         </form>
     )
 };

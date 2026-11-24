@@ -36,7 +36,7 @@ import {useState} from "react"
         </button>
         
         <button className='supprimer-btn' onClick={()=> props.onSupprimer(props.id)}>supprimer</button>
-        <button className='modifier-btn' onClick={()=> props.onModifier(props.id)}>modifier</button>
+        <button className='modifier-btn' onClick={()=> props.onModifier(props.etudiant)}>modifier</button>
       </div>
     </div>
   )
