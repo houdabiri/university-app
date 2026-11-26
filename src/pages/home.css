@@ -1,0 +1,20 @@
+.home{
+  background-color:  #f8f9fa;
+  text-align: center;
+  padding: 20px; 
+}
+
+.h1{
+    color:#27ae60;
+    font-size: 60px; 
+}
+
+.h2{
+    color: #e67e22;
+    font-size: 60px; 
+}
+
+.p{
+    color: #161514;
+    font-size: 60px; 
+}

@@ -13,9 +13,19 @@ import Navbar from './components/navbar'
 import Footer from './components/footer'
 import { useState } from 'react'
 import StudentForm from './components/studentForm';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from "./pages/home";
+import Etudiant from './pages/Etudiant';
+import DetailEtudiant from './pages/detailEtudiant';
+import Contact from './pages/contact';
+import NotFound from './pages/notFound';
+import{StudentProvider} from "./context/StudentProvider";
+
 
   function App() {
-   const [ etudiant,setEtudiants] = useState([
+
+  {/* const [ etudiant,setEtudiants] = useState([
   {
   id:1,
   nomPrenom: "Nour Houda Biri",
@@ -104,7 +114,7 @@ import StudentForm from './components/studentForm';
     );
     }
 
-  };*/}
+  };
 
 
   const [recherche, setRecherche] = useState("");
@@ -135,18 +145,19 @@ import StudentForm from './components/studentForm';
       );
       setEtudiantModifier(null);
    };
-
+  */}
   return (
-    <>
+    <StudentProvider>
+    <BrowserRouter>
       <Header />
       <Navbar />
-      <StudentForm 
+     {/* <StudentForm 
          key={etudiantModifier ? etudiantModifier.id : "nouveau"}
          onAjouterEtudiant={ajouterEtudiant}
          etudiantModifier={etudiantModifier}
          onModifierEtudiant={enregistrerModification}
          />
-     {/* <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter étudiant </button>*/}
+     {/* <button className ="ajouter-btn" onClick={ajouterEtudiant}> Ajouter étudiant </button>
       <input 
           type="text"
           className='search-input'
@@ -171,9 +182,18 @@ import StudentForm from './components/studentForm';
         onModifier={ModifierEtudiant}
       />
       ))}
-     </div>
+      </div>*/}
+
+      <Routes>
+        <Route path='/' element={<Home />}/>
+        <Route path='/etudiant' element={<Etudiant />}/>
+        <Route path='/etudiant/:id' element={<DetailEtudiant />}/>
+        <Route path='/contact' element={<Contact />}/>
+        <Route path='*' element={<NotFound />}/>
+      </Routes>
      <Footer />
-    </>
+    </BrowserRouter>
+    </StudentProvider>
   );
 }
 

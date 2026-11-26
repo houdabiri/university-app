@@ -1,5 +1,6 @@
 import './studentCard.css'
 import {useState} from "react"
+import {Link} from "react-router-dom";
   
   function StudentCard(props) {
   const ville = props.ville || "Non renseignée";
@@ -37,6 +38,11 @@ import {useState} from "react"
         
         <button className='supprimer-btn' onClick={()=> props.onSupprimer(props.id)}>supprimer</button>
         <button className='modifier-btn' onClick={()=> props.onModifier(props.etudiant)}>modifier</button>
+
+        <Link to={`/etudiant/${props.id}`} className="detail-btn">
+          Voir détails
+        </Link>
+
       </div>
     </div>
   )
